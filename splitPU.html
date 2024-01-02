@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split as P and U</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            user-select: none; /* Disable text selection */
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input {
+            margin-bottom: 10px;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #output-table {
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th, td {
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <form id="split-form">
+        <label for="value">Enter the value:</label>
+        <input type="text" id="value" required>
+        <button type="button" onclick="splitPU()">Generate P and U</button>
+    </form>
+
+    <div id="output-table"></div>
+
+    <script>
+        function splitPU() {
+            var inputValue = document.getElementById("value").value;
+
+            if (!isNaN(inputValue)) {
+                var resultHtml = '<table>';
+                resultHtml += '<thead><tr><th>P</th><th>U</th></tr></thead>';
+                resultHtml += '<tbody>';
+
+                var notP = [1, 2, 4, 5];
+                var notU = [1, 2, 3, 4, 5, 6, 7, 8, 10];
+                var p = 3;
+
+                while (p < inputValue) {
+                    if (!notP.includes(p)) {
+                        var u = inputValue - p;
+                        if (!notU.includes(u)) {
+                            resultHtml += '<tr><td>' + p + '</td><td>' + u + '</td></tr>';
+                        }
+                    }
+                    p++;
+                }
+
+                resultHtml += '</tbody></table>';
+
+                document.getElementById("output-table").innerHTML = resultHtml;
+            } else {
+                alert("Invalid input. Please enter a valid integer.");
+            }
+        }
+    </script>
+</body>
+</html>
